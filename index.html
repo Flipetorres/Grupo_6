@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gestor de predicación</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <button id="menuBtn" aria-label="Menú">☰</button>
+    <h1>Gestor de predicación</h1>
+    <button id="backupBtn" title="Exportar respaldo">⤓</button>
+  </header>
+
+  <nav id="sidebar" class="hidden">
+    <h2>Menú</h2>
+    <button id="newPersonBtn">+ Agregar persona</button>
+    <hr/>
+    <h3>Filtrar por sesión</h3>
+    <div id="filters"></div>
+    <hr/>
+    <h3>Textos bíblicos</h3>
+    <button id="manageTextsBtn">Administrar textos</button>
+    <button id="importBtn">Importar JSON</button>
+  </nav>
+
+  <main>
+    <section id="listView">
+      <div id="controls">
+        <input id="search" placeholder="Buscar por nombre o dirección..." />
+        <select id="sort">
+          <option value="name">Ordenar: Nombre</option>
+          <option value="nextVisit">Ordenar: Próxima visita</option>
+        </select>
+      </div>
+      <div id="peopleList"></div>
+    </section>
+
+    <section id="personView" class="hidden">
+      <button id="backList">← Volver</button>
+      <div id="personCard"></div>
+      <div id="visitsList"></div>
+      <button id="addVisitBtn">+ Agregar visita</button>
+      <div id="personActions">
+        <button id="editPersonBtn">Editar</button>
+        <button id="exportPersonBtn">Exportar persona</button>
+        <a id="whatsappLink" target="_blank" rel="noopener">Enviar WhatsApp</a>
+      </div>
+    </section>
+
+    <!-- Modals -->
+    <div id="modal" class="hidden">
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
