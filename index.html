@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupo de Predicación</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Grupo de Predicación</h1>
+            <div class="theme-toggle">
+                <i class="fas fa-sun"></i>
+                <label class="switch">
+                    <input type="checkbox" id="theme-switch">
+                    <span class="slider round"></span>
+                </label>
+                <i class="fas fa-moon"></i>
+            </div>
+        </header>
+
+        <nav class="main-menu">
+            <button class="menu-btn active" data-target="personas"><i class="fas fa-users"></i> Personas</button>
+            <button class="menu-btn" data-target="textos"><i class="fas fa-book"></i> Textos Bíblicos</button>
+            <button class="menu-btn" data-target="visitas"><i class="fas fa-calendar-alt"></i> Visitas</button>
+            <button class="menu-btn" data-target="ajustes"><i class="fas fa-cog"></i> Ajustes</button>
+        </nav>
+
+        <main>
+            <!-- Sección de Personas -->
+            <section id="personas" class="section active">
+                <div class="section-header">
+                    <h2>Personas</h2>
+                    <button id="add-person" class="action-btn"><i class="fas fa-plus"></i> Añadir</button>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="search-person" placeholder="Buscar persona...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="people-list" id="people-container">
+                    <!-- Las tarjetas de personas se generarán dinámicamente con JavaScript -->
+                </div>
+            </section>
+
+            <!-- Sección de Textos Bíblicos -->
+            <section id="textos" class="section">
+                <div class="section-header">
+                    <h2>Textos Bíblicos</h2>
+                    <button id="add-text" class="action-btn"><i class="fas fa-plus"></i> Crear Texto</button>
+                </div>
+                <div class="categories">
+                    <button class="category-btn active" data-category="todos">Todos</button>
+                    <button class="category-btn" data-category="animo">Ánimo</button>
+                    <button class="category-btn" data-category="consuelo">Consuelo</button>
+                    <button class="category-btn" data-category="confianza">Confianza</button>
+                    <button class="category-btn" data-category="fe">Fe</button>
+                    <button class="category-btn" data-category="esperanza">Esperanza</button>
+                    <button class="category-btn" data-category="paz">Paz</button>
+                    <button class="category-btn" data-category="predicacion">Predicación</button>
+                    <button class="category-btn" data-category="amor">Amor</button>
+                    <button class="category-btn" data-category="ansiedad">Ansiedad</button>
+                    <button class="category-btn" data-category="enfermedad">Enfermedad</button>
+                    <button class="category-btn" data-category="perdida">Pérdida</button>
+                    <button class="category-btn" data-category="temor">Temor</button>
+                    <button class="category-btn" data-category="agradecimiento">Agradecimiento</button>
+                </div>
+                <div class="texts-container" id="texts-container">
+                    <!-- Los textos bíblicos se generarán dinámicamente con JavaScript -->
+                </div>
+            </section>
+
+            <!-- Sección de Visitas -->
+            <section id="visitas" class="section">
+                <div class="section-header">
+                    <h2>Visitas Programadas</h2>
+                </div>
+                <div class="calendar-view">
+                    <div class="calendar-header">
+                        <button id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                        <h3 id="current-month">Mes Actual</h3>
+                        <button id="next-month"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="calendar" id="calendar-container">
+                        <!-- El calendario se generará dinámicamente con JavaScript -->
+                    </div>
+                </div>
+                <div class="upcoming-visits" id="upcoming-visits">
+                    <h3>Próximas Visitas</h3>
+                    <!-- Las próximas visitas se generarán dinámicamente con JavaScript -->
+                </div>
+            </section>
+
+            <!-- Sección de Ajustes -->
+            <section id="ajustes" class="section">
+                <div class="section-header">
+                    <h2>Ajustes</h2>
+                </div>
+                <div class="settings-container">
+                    <div class="setting-item">
+                        <span>Modo Oscuro</span>
+                        <label class="switch">
+                            <input type="checkbox" id="dark-mode-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <span>Notificaciones</span>
+                        <label class="switch">
+                            <input type="checkbox" id="notifications-toggle" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <span>Exportar Datos</span>
+                        <button id="export-data" class="action-btn"><i class="fas fa-download"></i> Exportar</button>
+                    </div>
+                    <div class="setting-item">
+                        <span>Importar Datos</span>
+                        <button id="import-data" class="action-btn"><i class="fas fa-upload"></i> Importar</button>
+                    </div>
+                    <div class="setting-item">
+                        <span>Acerca de</span>
+                        <button id="about-btn" class="action-btn"><i class="fas fa-info-circle"></i> Info</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal para añadir/editar persona -->
+    <div class="modal" id="person-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Añadir Persona</h3>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="person-form">
+                    <input type="hidden" id="person-id">
+                    <div class="form-group">
+                        <label for="nombre">Nombre Completo</label>
+                        <input type="text" id="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="direccion">Dirección</label>
+                        <input type="text" id="direccion">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="tel" id="telefono">
+                    </div>
+                    <div class="form-group">
+                        <label for="ultima-visita">Última Visita de Pastoreo</label>
+                        <input type="date" id="ultima-visita">
+                    </div>
+                    <div class="form-group">
+                        <label for="proxima-visita">Próxima Visita</label>
+                        <input type="date" id="proxima-visita">
+                    </div>
+                    <div class="form-group">
+                        <label for="observaciones">Observaciones</label>
+                        <textarea id="observaciones" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="necesidades">Necesidades</label>
+                        <textarea id="necesidades" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Textos Bíblicos Asignados</label>
+                        <div class="assigned-texts" id="assigned-texts">
+                            <!-- Los textos asignados se generarán dinámicamente -->
+                        </div>
+                        <button type="button" id="assign-text-btn" class="secondary-btn"><i class="fas fa-plus"></i> Asignar Texto</button>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn">Cancelar</button>
+                        <button type="submit" class="save-btn">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para asignar textos bíblicos -->
+    <div class="modal" id="text-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Asignar Texto Bíblico</h3>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="search-bar">
+                    <input type="text" id="search-text" placeholder="Buscar texto...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="categories">
+                    <button class="category-btn active" data-category="todos">Todos</button>
+                    <button class="category-btn" data-category="animo">Ánimo</button>
+                    <button class="category-btn" data-category="consuelo">Consuelo</button>
+                    <button class="category-btn" data-category="confianza">Confianza</button>
+                    <button class="category-btn" data-category="fe">Fe</button>
+                    <button class="category-btn" data-category="esperanza">Esperanza</button>
+                    <button class="category-btn" data-category="paz">Paz</button>
+                    <button class="category-btn" data-category="predicacion">Predicación</button>
+                    <button class="category-btn" data-category="amor">Amor</button>
+                    <button class="category-btn" data-category="ansiedad">Ansiedad</button>
+                    <button class="category-btn" data-category="enfermedad">Enfermedad</button>
+                    <button class="category-btn" data-category="perdida">Pérdida</button>
+                    <button class="category-btn" data-category="temor">Temor</button>
+                    <button class="category-btn" data-category="agradecimiento">Agradecimiento</button>
+                </div>
+                <div class="texts-list" id="texts-list">
+                    <!-- Los textos bíblicos se generarán dinámicamente -->
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn">Cancelar</button>
+                    <button type="button" id="confirm-assign-btn" class="save-btn">Asignar Seleccionados</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para ver detalles de persona -->
+    <div class="modal" id="details-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="details-name">Nombre de la Persona</h3>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="details-container">
+                    <div class="detail-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span id="details-address">Dirección</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-phone"></i>
+                        <span id="details-phone">Teléfono</span>
+                        <a href="#" id="whatsapp-link" class="action-icon"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-calendar-check"></i>
+                        <span id="details-last-visit">Última Visita</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span id="details-next-visit">Próxima Visita</span>
+                    </div>
+                    <div class="detail-section">
+                        <h4>Observaciones</h4>
+                        <p id="details-observations">Observaciones de la persona</p>
+                    </div>
+                    <div class="detail-section">
+                        <h4>Necesidades</h4>
+                        <p id="details-needs">Necesidades de la persona</p>
+                    </div>
+                    <div class="detail-section">
+                        <h4>Textos Bíblicos Asignados</h4>
+                        <div id="details-texts" class="details-texts">
+                            <!-- Los textos asignados se generarán dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+                <div class="details-actions">
+                    <button id="edit-person-btn" class="action-btn"><i class="fas fa-edit"></i> Editar</button>
+                    <button id="delete-person-btn" class="action-btn delete-btn"><i class="fas fa-trash"></i> Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación -->
+    <div class="modal" id="confirm-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmar Acción</h3>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <p id="confirm-message">¿Estás seguro de que deseas realizar esta acción?</p>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn">Cancelar</button>
+                    <button type="button" id="confirm-action-btn" class="delete-btn">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para añadir/editar texto bíblico -->
+    <div class="modal" id="biblical-text-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="text-modal-title">Crear Texto Bíblico</h3>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="biblical-text-form">
+                    <input type="hidden" id="text-id">
+                    <div class="form-group">
+                        <label for="text-reference">Referencia</label>
+                        <input type="text" id="text-reference" placeholder="Ej: Juan 3:16" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="text-content">Contenido</label>
+                        <textarea id="text-content" rows="5" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="text-category">Categoría</label>
+                        <select id="text-category" required>
+                            <option value="animo">Ánimo</option>
+                            <option value="consuelo">Consuelo</option>
+                            <option value="confianza">Confianza</option>
+                            <option value="fe">Fe</option>
+                            <option value="esperanza">Esperanza</option>
+                            <option value="paz">Paz</option>
+                            <option value="predicacion">Predicación</option>
+                            <option value="amor">Amor</option>
+                            <option value="ansiedad">Ansiedad</option>
+                            <option value="enfermedad">Enfermedad</option>
+                            <option value="perdida">Pérdida</option>
+                            <option value="temor">Temor</option>
+                            <option value="agradecimiento">Agradecimiento</option>
+                            <option value="personalizado">Personalizado</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn">Cancelar</button>
+                        <button type="submit" class="save-btn">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
